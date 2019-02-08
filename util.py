@@ -232,6 +232,26 @@ def manhattanDistance( xy1, xy2 ):
   The search project should not need anything below this line.
 """
 
+# class CornerState:
+#     """
+#       Hold the variables for state in a corners problem
+#     """
+#     def  __init__(self, position, corners_dict):
+#         self.position = position
+#         self.corners = corners_dict
+    
+#     def reachedCorner(self, corner):
+#         "Shows that the corner was reached"
+#         print(self.corners)
+#         self.corners[corner] = True
+    
+#     def allCornersReached(self):
+#         "Checks all corners if they were reached"
+#         for corner in self.corners.keys():
+#             if self.corners[corner] is False:
+#                 return False
+#         return True
+
 class Counter(dict):
     """
     A counter keeps track of counts for a set of keys.
