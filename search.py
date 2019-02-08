@@ -87,53 +87,54 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    from game import Directions
     from util import Stack
     
-    actions, visited, fringe = [], [], Stack()
-    paths = {}
-    goal = None
+    
 
-    print("Start:", problem.getStartState())
-    print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+    # print("Start:", problem.getStartState())
+    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
 
-    fringe.push((problem.getStartState(), '', 0))
+    visited, fringe = [], Stack()
+
+    fringe.push((problem.getStartState(), ()))
     while fringe.isEmpty() is False:
       curr_state = fringe.pop()
 
-      if curr_state in visited:
-        continue
+      if problem.isGoalState(curr_state[0]):
+        return list(curr_state[1])
 
-      visited.append(curr_state)
+      if curr_state[0] not in visited:
+        visited.append(curr_state[0])
 
-      if problem.isGoalState(curr_state):
-        goal = curr_state
-        break
-      
-      
-      # if curr_state[1]:
-      #   actions.append(curr_state[1])
+        for successor in problem.getSuccessors(curr_state[0]):
+          added_path = curr_state[1] + (successor[1],) #adding tuples
 
-      for successor in problem.getSuccessors(curr_state[0]):
-        fringe.push(successor)
-        paths[successor[0]] = curr_state
-
-    curr_pos = goal
-    print(goal)
-    # while curr_pos[0] != problem.getStartState():
-    #   actions.append(curr_pos[1])
-    #   curr_pos = paths[curr_pos[0]]
-    #   print(curr_pos)
-    #   # curr_pos = (problem.getStartState(), '', 0)\
-    # print(actions)
-
-    return [Directions.WEST]; 
+          if successor[0] not in visited:
+            fringe.push((successor[0], added_path))
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    from util import Queue
+
+    visited, fringe = [], Queue()
+
+    fringe.push((problem.getStartState(), ()))
+    while fringe.isEmpty() is False:
+      curr_state = fringe.pop()
+
+      if problem.isGoalState(curr_state[0]):
+        return list(curr_state[1])
+
+      if curr_state[0] not in visited:
+        visited.append(curr_state[0])
+
+        for successor in problem.getSuccessors(curr_state[0]):
+          added_path = curr_state[1] + (successor[1],) #adding tuples
+
+          if successor[0] not in visited:
+            fringe.push((successor[0], added_path))
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
